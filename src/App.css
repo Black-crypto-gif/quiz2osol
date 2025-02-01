@@ -1,0 +1,171 @@
+/* General Styles */
+body {
+  background-color: #000; /* Black background */
+  color: #fff; /* White text */
+  font-family: 'Poppins', sans-serif;
+  margin: 0;
+  padding: 0;
+  line-height: 1.8;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+}
+
+.app {
+  max-width: 90%;
+  width: 400px;
+  margin: 20px auto;
+  padding: 25px;
+  background: #1a1a1a;
+  border-radius: 12px;
+  box-shadow: 0px 6px 15px rgba(255, 255, 255, 0.15);
+}
+
+h1, h2 {
+  font-size: 2.2rem;
+  font-weight: bold;
+  margin-bottom: 25px;
+}
+
+button {
+  background-color: #fff; /* White background for buttons */
+  color: #000; /* Black text for buttons */
+  border: none;
+  padding: 14px 22px;
+  font-size: 1.1rem;
+  cursor: pointer;
+  border-radius: 8px;
+  margin: 18px 0;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  width: 100%;
+  font-weight: bold;
+}
+
+button:hover {
+  background-color: #ddd;
+  transform: scale(1.05);
+}
+
+.google-login img {
+  width: 24px;
+  height: 24px;
+  margin-right: 12px;
+  vertical-align: middle;
+}
+
+/* User Profile Section */
+.profile {
+  margin-bottom: 25px;
+}
+
+.profile p {
+  font-size: 1.3rem;
+  font-weight: 500;
+}
+
+/* Quiz Section */
+.quiz {
+  background-color: #1a1a1a;
+  padding: 25px;
+  border-radius: 12px;
+  margin-top: 25px;
+}
+
+.quiz h2 {
+  font-size: 1.6rem;
+  font-weight: bold;
+  margin-bottom: 18px;
+}
+
+.quiz p {
+  font-size: 1.2rem;
+  font-weight: 500;
+  margin-bottom: 20px;
+  color: #bbb;
+}
+
+.quiz label {
+  display: block;
+  margin: 12px 0;
+  font-size: 1.3rem;
+  font-weight: 500;
+}
+
+.quiz input[type="radio"] {
+  margin-right: 12px;
+}
+
+.quiz button {
+  background-color: #4caf50;
+  color: #fff;
+  font-weight: bold;
+}
+
+.quiz button:hover {
+  background-color: #45a049;
+}
+
+/* Leaderboard Section */
+.leaderboard {
+  background-color: #1a1a1a;
+  padding: 25px;
+  border-radius: 12px;
+  margin-top: 25px;
+}
+
+.leaderboard h2 {
+  font-size: 1.6rem;
+  font-weight: bold;
+  margin-bottom: 18px;
+}
+
+.leaderboard ol {
+  list-style-type: none;
+  padding: 0;
+}
+
+.leaderboard li {
+  font-size: 1.3rem;
+  font-weight: bold;
+  margin: 12px 0;
+}
+
+.leaderboard li:nth-child(1) {
+  color: #ffd700;
+}
+
+.leaderboard li:nth-child(2) {
+  color: #c0c0c0;
+}
+
+.leaderboard li:nth-child(3) {
+  color: #cd7f32;
+}
+
+/* Responsive Design */
+@media (max-width: 600px) {
+  .app {
+    width: 95%;
+    padding: 18px;
+  }
+
+  h1, h2 {
+    font-size: 2rem;
+  }
+
+  button {
+    font-size: 1rem;
+    padding: 12px;
+  }
+}
+
+/* Quiz Title Section */
+.quiz-title {
+  font-size: 1.4rem;
+  font-weight: bold;
+  margin-bottom: 20px;
+  color: #f8d210;
+}
