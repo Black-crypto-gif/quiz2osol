@@ -1,7 +1,24 @@
 import { useState } from "react";
 
-const questions = [
-  {
+const questions = {
+  "العقيدة": [
+    {
+      question: "ما الحكمة من بدء المؤلف كتابه بالبسملة؟",
+      options: ["اقتداء بكتاب الله", "اتباعًا لحديث النبي صلى الله عليه وسلم", "الاقتداء بالرسول صلى الله عليه وسلم", "جميع ما سبق"],
+      answer: "جميع ما سبق",
+    },
+  ],
+  "الفقه": [
+    {
+      question: "ما هي شروط صحة الصلاة؟",
+      options: ["الطهارة", "استقبال القبلة", "النية", "جميع ما سبق"],
+      answer: "جميع ما سبق",
+    },
+  ],
+};
+
+  
+ /*  {
     question: "ما الحكمة من بدء المؤلف كتابه بالبسملة؟",
     options: [
       "اقتداء بكتاب الله",
@@ -360,49 +377,70 @@ const questions = [
       "من سره أن يبسط له في رزقه فليستغفر الله",
     ],
     answer: "كل أمتي يدخلون الجنة إلا من أبى، فقيل: ومن يأبى يا رسول الله؟ قال: من أطاعني دخل الجنة ومن عصاني دخل النار",
-  },
-];
+  }, */
 
-function Quiz({ setScore, setQuizStarted, saveScore }) {
-  const [currentQuestion, setCurrentQuestion] = useState(0);
-  const [selectedOption, setSelectedOption] = useState("");
-  const [correctAnswers, setCorrectAnswers] = useState(0);
 
-  const handleNext = () => {
-    if (selectedOption === questions[currentQuestion].answer) {
-      setCorrectAnswers((prev) => prev + 1); // Increment correct answers
-    }
-    setSelectedOption("");
-    if (currentQuestion < questions.length - 1) {
-      setCurrentQuestion((prev) => prev + 1);
-    } else {
-      const percentage = (correctAnswers / questions.length) * 100; // Calculate percentage
-      setScore(percentage); // Update score in parent component
-      saveScore(percentage); // Save percentage to Firestore
-      setQuizStarted(false); // End the quiz
-    }
-  };
-
-  return (
-    <div className="quiz">
-      <h2>{questions[currentQuestion].question}</h2>
-      {questions[currentQuestion].options.map((option, index) => (
-        <div key={index}>
-          <label>
-            <input
-              type="radio"
-              name="option"
-              value={option}
-              checked={selectedOption === option}
-              onChange={() => setSelectedOption(option)}
-            />
-            {option}
-          </label>
+  function Quiz({ setScore, setQuizStarted, saveScore }) {
+    const [selectedSection, setSelectedSection] = useState(null);
+    const [currentQuestion, setCurrentQuestion] = useState(0);
+    const [selectedOption, setSelectedOption] = useState("");
+    const [correctAnswers, setCorrectAnswers] = useState(0);
+    
+    if (!selectedSection) {
+      return (
+        <div>
+          <h2>اختر القسم الذي تريد اختباره:</h2>
+          {Object.keys(questions).map((section) => (
+            <button key={section} onClick={() => setSelectedSection(section)}>
+              {section}
+            </button>
+          ))}
         </div>
-      ))}
-      <button onClick={handleNext}>التالي</button>
-    </div>
-  );
-}
-
-export default Quiz;
+      );
+    }
+  
+    const sectionQuestions = questions[selectedSection];
+  
+    const handleNext = () => {
+      if (selectedOption === sectionQuestions[currentQuestion].answer) {
+        setCorrectAnswers((prev) => prev + 1);
+      }
+      setSelectedOption("");
+      if (currentQuestion < sectionQuestions.length - 1) {
+        setCurrentQuestion((prev) => prev + 1);
+      } else {
+        const percentage = (correctAnswers / sectionQuestions.length) * 100;
+        setScore((prevScores) => ({
+          ...prevScores,
+          [selectedSection]: percentage, 
+        }));
+        saveScore(percentage, selectedSection);
+        setSelectedSection(null);
+        setCurrentQuestion(0);
+      }
+    };
+  
+    return (
+      <div className="quiz">
+        <h2>{sectionQuestions[currentQuestion].question}</h2>
+        {sectionQuestions[currentQuestion].options.map((option, index) => (
+          <div key={index}>
+            <label>
+              <input
+                type="radio"
+                name="option"
+                value={option}
+                checked={selectedOption === option}
+                onChange={() => setSelectedOption(option)}
+              />
+              {option}
+            </label>
+          </div>
+        ))}
+        <button onClick={handleNext}>التالي</button>
+      </div>
+    );
+  }
+  
+  export default Quiz;
+  

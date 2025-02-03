@@ -37,11 +37,31 @@ function App() {
   const handleLogin = async () => {
     try {
       const result = await signInWithPopup(auth, provider);
-      setUser(result.user);
+      const user = result.user;
+  
+      // Check if the user exists in Firestore
+      const userRef = collection(db, "users");
+      const q = query(userRef, where("email", "==", user.email));
+      const querySnapshot = await getDocs(q);
+  
+      let fullName = "";
+      if (querySnapshot.empty) {
+        // Prompt user to enter full name
+        fullName = prompt("يرجى إدخال اسمك الكامل (الاسم واللقب):");
+        await addDoc(userRef, {
+          email: user.email,
+          fullName: fullName,
+        });
+      } else {
+        fullName = querySnapshot.docs[0].data().fullName;
+      }
+  
+      setUser({ ...user, fullName });
     } catch (error) {
       console.error("Error during login:", error);
     }
   };
+  
 
   const handleLogout = async () => {
     try {
